@@ -20,6 +20,17 @@ We aim to identify the regional identity and subtypes of iPSC motor neurons and 
 - Preprocessing and integration: mack_d_iPSC_motor_neurons_EDA_day0-day45.Rmd
 - Figures for CMTR: mack_d_iPSC_motor_neurons_day0-day50_figures.Rmd
 
+### Usage
+
+``` bash
+wget -O /dev/null "http://localhost:8787/auth-sign-in?appUri=%2F" 2> wget.log
+IP=$(cat wget.log | grep -E "localhost\)...\s" | cut -f 4 -d " " )
+URL="http://$IP:8787/auth-sign-in?appUri=%2F"
+```
+
+The non-root default user: `rstudio` 
+
+
 ### Author
 
 @jennylsmith
