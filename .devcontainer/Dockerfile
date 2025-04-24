@@ -11,7 +11,11 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     libssl-dev libreadline-dev libffi-dev \
     wget xorg openbox git gh
 
+RUN apt-get -y install pkg-config python3-venv python3-dev
+
 # install R package renv
 # See Ubuntu repos for more packages that can be installed through apt manager: https://cloud.r-project.org/bin/linux/ubuntu/
 RUN Rscript -e "install.packages('remotes', repos='https://cloud.r-project.org', verbose='TRUE'); remotes::install_version('renv', version = '$RENV_VER', verbose = 'TRUE')"
+
+# required for the VSCode R Extension. See https://github.com/REditorSupport/vscode-R/wiki
 RUN Rscript -e "install.packages('languageserver')"
