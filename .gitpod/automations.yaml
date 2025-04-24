@@ -1,12 +1,7 @@
 tasks:
-  numpy:
-    name: Install numpy version
-    command: python3 -m venv venv && source venv/bin/activate && python3 -m pip install numpy==2.0.0 Cython==3.0.10
-    triggeredBy:
-      - manual
   pypackages:
     name: Install python packages using venv
-    command: source venv/bin/activate && python3 -m pip install -r env/scanvi_scib_cellrank_requirements.txt
+    command: python3 -m venv venv && source venv/bin/activate && python3 -m pip install -r env/requirements.txt && deactivate
     triggeredBy:
       - manual
   rpackages:
