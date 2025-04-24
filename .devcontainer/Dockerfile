@@ -1,4 +1,4 @@
-FROM rocker/r-ver:4.4
+FROM rocker/rstudio:4.4
 
 # FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 ENV RENV_VER='1.0.11'
