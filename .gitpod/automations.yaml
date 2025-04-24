@@ -1,0 +1,11 @@
+tasks:
+  pypackages:
+    name: Install python packages using venv
+    command: python3 -m venv venv && source venv/bin/activate && python3 -m pip install -r env/scanvi_scib_cellrank_requirements.txt"
+    triggeredBy:
+      - manual
+  rpackages:
+    name: Install R packages using Renv
+    command: Rscript -e "renv::restore()"
+    triggeredBy:
+      - manual
