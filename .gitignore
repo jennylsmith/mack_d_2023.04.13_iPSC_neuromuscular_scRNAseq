@@ -9,7 +9,7 @@
 *.docx
 
 # python 
-.venv/
+venv/
 
 # this is OS specific for Cybertron/Local
 .Renviron 
