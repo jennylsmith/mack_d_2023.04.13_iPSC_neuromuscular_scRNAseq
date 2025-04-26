@@ -2,6 +2,9 @@ FROM rocker/rstudio:4.4
 
 # FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 ENV RENV_VER='1.0.11'
+RUN env | xargs
+# RUN env | grep -Ei "pass"
+# RUN env | grep -Ei "MYARG"
 
 # update packages and install dependencies
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \

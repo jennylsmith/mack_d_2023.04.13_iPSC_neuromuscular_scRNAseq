@@ -9,7 +9,20 @@
 	"build": {
         "context": ".",
         "dockerfile": "Dockerfile"
-    }
+        // "args": { "MYARG": "MYVALUE", 
+        //           "DISABLE_AUTH": "true"
+        //         },
+        // "options": [
+        //     "--platform=linux/arm64"
+        //     "--build-arg PASSWORD"
+        // ]
+    },
+    "runArgs": [
+        "--env DISABLE_AUTH=true"
+    ],
+    "initializeCommand": "env | xargs"
+    // "containerEnv": { "PASSWORD": "${containerEnv:PASSWORD}"
+    // }
 	// Features add additional features to your environment. See https://containers.dev/features
 	// Beware: features are not supported on all platforms and may have unintended side-effects.
 	// "features": {
