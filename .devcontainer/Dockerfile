@@ -1,8 +1,8 @@
-FROM rocker/rstudio:4.4
+FROM rocker/rstudio:4.4.3
 
 # FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 ENV RENV_VER='1.0.11'
-RUN env | xargs
+RUN env | xargs > /opt/docker_env.txt
 # RUN env | grep -Ei "pass"
 # RUN env | grep -Ei "MYARG"
 
@@ -22,3 +22,6 @@ RUN Rscript -e "install.packages('remotes', repos='https://cloud.r-project.org',
 
 # required for the VSCode R Extension. See https://github.com/REditorSupport/vscode-R/wiki
 # RUN Rscript -e "install.packages('languageserver')"
+
+# create working dir
+WORKDIR /home/rstudio
