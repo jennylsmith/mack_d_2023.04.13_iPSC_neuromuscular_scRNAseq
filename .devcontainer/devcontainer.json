@@ -9,18 +9,19 @@
 	"build": {
         "context": ".",
         "dockerfile": "Dockerfile"
-        // "args": { "MYARG": "MYVALUE", 
-        //           "DISABLE_AUTH": "true"
-        //         },
+        // "args": { "MYARG": "MYVALUE", "MYVAR=VALUE" },
         // "options": [
         //     "--platform=linux/arm64"
-        //     "--build-arg PASSWORD"
         // ]
     },
     "runArgs": [
-        "--env DISABLE_AUTH=true"
+        "--mount", "type=bind,src=/workspaces/mack_d_2023.04.13_iPSC_neuromuscular_scRNAseq,dst=/home/rstudio/mack_d_2023.04.13_iPSC_neuromuscular_scRNAseq"
+        // "--env", "MYVAR=VALUE"
     ],
+    // "workspaceMount": "source=/home/rstudio,target=/home,type=bind,consistency=cached",
+    // "workspaceFolder": "/home",
     "initializeCommand": "env | xargs"
+    // "onCreateCommand": "echo rstudio:$PASSWORD | chpasswd && chown -R rstudio /home/rstudio/"
     // "containerEnv": { "PASSWORD": "${containerEnv:PASSWORD}"
     // }
 	// Features add additional features to your environment. See https://containers.dev/features
