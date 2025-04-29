@@ -2,9 +2,7 @@ FROM rocker/rstudio:4.4.3
 
 # FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 ENV RENV_VER='1.0.11'
-RUN env | xargs > /opt/docker_env.txt
-# RUN env | grep -Ei "pass"
-# RUN env | grep -Ei "MYARG"
+ENV ROOT=true
 
 # update packages and install dependencies
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -25,3 +23,5 @@ RUN Rscript -e "install.packages('remotes', repos='https://cloud.r-project.org',
 
 # create working dir
 WORKDIR /home/rstudio
+RUN bash /rocker_scripts/init_userconf.sh
+RUN env | xargs > /opt/docker_env.txt
