@@ -9,7 +9,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
     build-essential gfortran libglpk40 \
     zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev \
-    libssl-dev libreadline-dev libffi-dev \
+    liblzma-dev libssl-dev libreadline-dev libffi-dev \
     curl wget xorg openbox rclone git gh
 
 # install AWS dependencies
