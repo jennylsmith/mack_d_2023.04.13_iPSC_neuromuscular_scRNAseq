@@ -11,11 +11,12 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev \
     liblzma-dev libbz2-dev \
     libssl-dev libreadline-dev libffi-dev \
-    curl wget xorg openbox rclone git gh
+    wget xorg openbox rclone git gh \
+    curl libcurl4-openssl-dev
 
 # install AWS dependencies
 RUN apt-get -y install s3fs
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install && rm -f awscliv2.zip
 
 # install python dependencies
 RUN apt-get -y install pkg-config python3-venv python3-dev
