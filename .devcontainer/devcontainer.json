@@ -18,7 +18,7 @@
     "workspaceMount": "source=${localWorkspaceFolder},target=/home/rstudio/${localWorkspaceFolderBasename},type=bind,consistency=cached",
     "workspaceFolder": "/home/rstudio/${localWorkspaceFolderBasename}",
     "initializeCommand": "env | xargs"
-    // "onCreateCommand": "echo rstudio:$PASSWORD | chpasswd && chown -R rstudio /home/rstudio/"
+    // "onCreateCommand": "echo rstudio:$PASSWORD | sudo chpasswd"
     // "containerEnv": { "PASSWORD": "${containerEnv:PASSWORD}"
     // },
     // "runArgs": [
