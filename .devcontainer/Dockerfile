@@ -21,7 +21,7 @@ RUN Rscript -e "install.packages('remotes', repos='https://cloud.r-project.org',
 # required for the VSCode R Extension. See https://github.com/REditorSupport/vscode-R/wiki
 # RUN Rscript -e "install.packages('languageserver')"
 
-# create working dir
+# create working dir and update rstudio user/group
 WORKDIR /home/rstudio
 RUN bash /rocker_scripts/init_userconf.sh
 RUN env | xargs > /opt/docker_env.txt

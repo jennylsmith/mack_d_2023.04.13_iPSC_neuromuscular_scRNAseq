@@ -9,7 +9,7 @@
 	"build": {
         "context": ".",
         "dockerfile": "Dockerfile"
-        // "args": { "MYARG": "MYVALUE", "MYVAR=VALUE" },
+        // "args": { "MYARG": "MYVALUE", "MYVAR": "VALUE1" },
         // "options": [
         //     "--platform=linux/arm64"
         // ]
@@ -17,13 +17,12 @@
     "containerUser": "rstudio",
     "workspaceMount": "source=${localWorkspaceFolder},target=/home/rstudio/${localWorkspaceFolderBasename},type=bind,consistency=cached",
     "workspaceFolder": "/home/rstudio/${localWorkspaceFolderBasename}",
-    "initializeCommand": "env | xargs"
-    // "onCreateCommand": "echo rstudio:$PASSWORD | sudo chpasswd"
-    // "containerEnv": { "PASSWORD": "${containerEnv:PASSWORD}"
+    "postStartCommand": "echo rstudio:$PASSWORD | sudo chpasswd"
+    // "containerEnv": { "MYVAR": "${localEnv:MYVAR}"
     // },
     // "runArgs": [
     //     "--mount", "type=bind,src=/workspaces/mack_d_2023.04.13_iPSC_neuromuscular_scRNAseq,dst=/home/rstudio/mack_d_2023.04.13_iPSC_neuromuscular_scRNAseq"
-    //     "--env", "ROOT=true"
+    //     "--env", "VAR=VALUE2"
     // ],
 	// Features add additional features to your environment. See https://containers.dev/features
 	// Beware: features are not supported on all platforms and may have unintended side-effects.
