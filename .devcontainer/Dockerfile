@@ -10,7 +10,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     build-essential gfortran libglpk40 \
     zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev \
     libssl-dev libreadline-dev libffi-dev \
-    wget xorg openbox git gh
+    wget xorg openbox rclone git gh
 
 RUN apt-get -y install pkg-config python3-venv python3-dev
 
