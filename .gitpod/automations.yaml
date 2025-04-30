@@ -1,11 +1,19 @@
+services:
+  rstudio-server:
+    name: Rstudio server
+    description: Start the rstudio server
+    triggeredBy:
+        - postDevcontainerStart
+    commands:
+        start: sudo rserver
 tasks:
   pypackages:
     name: Install python packages using venv
     command: python3 -m venv venv && source venv/bin/activate && python3 -m pip install -r env/requirements.txt && deactivate
     triggeredBy:
-      - manual
+      - postDevcontainerStart
   rpackages:
     name: Install R packages using Renv
     command: Rscript -e "renv::restore()"
     triggeredBy:
-      - manual
+      - postDevcontainerStart
