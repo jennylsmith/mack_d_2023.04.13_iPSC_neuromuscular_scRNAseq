@@ -20,6 +20,7 @@ tasks:
       - postDevcontainerStart
   rpackages:
     name: Install R packages using Renv
+    dependsOn: ['pypackages']
     command: Rscript -e "renv::restore()"
     triggeredBy:
       - postDevcontainerStart
