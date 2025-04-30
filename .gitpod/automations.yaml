@@ -7,6 +7,12 @@ services:
     commands:
         start: sudo rserver
 tasks:
+  # aws-s3:
+  #   name: AWS S3 bucket 
+  #   description: Mount AWS S3 bucket 
+  #   command: |
+  #         mkdir -p /home/rstudio/mack_d_2023.04.13_iPSC_neuromuscular_scRNAseq/resources
+  #         s3fs <your-s3-bucket>:/mack_d_2023.04.13_iPSC_neuromuscular_scRNAseq/resources /home/rstudio/mack_d_2023.04.13_iPSC_neuromuscular_scRNAseq/resources -o nonempty
   pypackages:
     name: Install python packages using venv
     command: python3 -m venv venv && source venv/bin/activate && python3 -m pip install -r env/requirements.txt && deactivate
