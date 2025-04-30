@@ -70,6 +70,7 @@ options(future.globals.maxSize = 10000 * 1024^2)
 ```
 
 # Define Functions
+
 ```{r}
 colors_vector <- c(RColorBrewer::brewer.pal(12, "Paired"),
             "blue1", "darkslategray3", "burlywood3", "#984EA3",
@@ -277,10 +278,12 @@ OUTDIR="resources/cell_refs/GSE190442"
 mkdir -p $OUTDIR
 wget -P $OUTDIR https://ftp.ncbi.nlm.nih.gov/geo/series/GSE190nnn/GSE190442/suppl/GSE190442_aggregated_counts_postqc.csv.gz
 wget -P $OUTDIR https://ftp.ncbi.nlm.nih.gov/geo/series/GSE190nnn/GSE190442/suppl/GSE190442_aggregated_metadata_postqc.csv.gz
+
 rclone copy --http-url https://zenodo.org :http:record/4546932 $OUTDIR -P
 rclone copy --http-url http://celltypes.brain-map.org :http:api/v2/well_known_file_download/694416044 $OUTDIR -P
 rclone copy --http-url http://celltypes.brain-map.org :http:api/v2/well_known_file_download/502175284 $OUTDIR -P
-rclone copy refseq:/geo/series/GSE190nnn/GSE190442/suppl/GSE190442_RAW.tar $OUTDIR -P
+# https://ftp.ncbi.nlm.nih.gov/geo/series/
+rclone copy --http-url https://ftp.ncbi.nlm.nih.gov :http:/geo/series/GSE190nnn/GSE190442/suppl/GSE190442_RAW.tar $OUTDIR -P
 ```
 
 ```{bash eval=FALSE}
@@ -302,7 +305,7 @@ OUTDIR="resources/cell_refs/Rayon_2021"
 mkdir $OUTDIR
 cd $OUTDIR
 
-# https://ftp.ncbi.nlm.nih.gov/geo/series/
+
 # rclone copy refseq:/geo/series/GSE171nnn/GSE171892/suppl . -P
 rclone copy --http-url https://ftp.ncbi.nlm.nih.gov :http:/geo/series/GSE171nnn/GSE171892/suppl . -P
 
@@ -310,10 +313,13 @@ for file in $(ls -1 *.gz)
 do
   tar -xzvf $file
 done
+
 # cd resources
 # git clone https://github.com/briscoelab/human_single_cell
 ```
+
 # Background
+
 The pMN cell domain gives rise to: (1) 100s of genetically distinct groups of
 cholinergic alpha motor neurons clustered into motor pools that innervate
 specific skeletal muscles; (2) gamma motor neurons that innervate intrafusal
@@ -321,7 +327,9 @@ fibers of specific skeletal muscles for proprioception; (3) the predominantly
 thoracic (T1–12, and to L1 and L2 in some species) cholinergic preganglionic
 sympathetic neurons; (4) the cholinergic parasympathetic motor neurons in the
 sacral (S2–4) cord; and (5) oligodendrocytes found throughout the spinal cord
+
 # Genome Refs
+
 ```{r eval=FALSE}
 edb <- ensembldb::EnsDb("resources/genome/Homo_sapiens.GRCh38.98.sqlite")
 # edb
@@ -338,6 +346,7 @@ human_ens_entrez <-  ens_entrez %>%
   filter(X.tax_id == "9606") %>%
   janitor::clean_names()
 ```
+
 ```{r}
 idmap <- read.csv("resources/Homo_sapiens.GRCh38.98_gene_ids_alias.csv") %>%
   janitor::clean_names() %>%
@@ -345,12 +354,14 @@ idmap <- read.csv("resources/Homo_sapiens.GRCh38.98_gene_ids_alias.csv") %>%
 head(idmap)
 # dim(idmap)
 ```
+
 ```{r eval=FALSE}
 allen_genes <- read.csv("resources/cell_refs/allen_institute/human_MTG_2018-06-14_genes-rows.csv") %>%
   select(-chromosome, -gene_name)
 head(allen_genes)
 dim(allen_genes) #50281
 ```
+
 ```{r}
 marker_genes_mc <- read.csv("resources/cell_refs/allen_institute/allen_institute_azimuth_marker_gene_list.csv") %>%
   mutate(Label = gsub("\\s{1,}|\\/|-","_", Label)) %>%
@@ -358,7 +369,8 @@ marker_genes_mc <- read.csv("resources/cell_refs/allen_institute/allen_institute
   as.list() %>%
   sapply(.,  function(x) str_split(gsub("\\.","-",x), pattern = ", "))
 ```
-```{r}
+
+```{r eval=FALSE}
 changho_refs_file <- "references/changho_updated_marker_genes_MN_IN_annotation.xlsx"
 marker_genes_chun <- purrr::map_dfr(openxlsx::getSheetNames(changho_refs_file)[2:4], function(x){
   openxlsx::read.xlsx(changho_refs_file, sheet = x)
@@ -378,6 +390,7 @@ marker_genes_chun_list <- purrr::map(unique(marker_genes_chun$group), function(x
 marker_genes_chun_list[["pan_neuronal_markers"]] <- str_split(marker_genes_chun[1,"pan_neuronal_markers"],pattern = ", ", n=3)[[1]]
 # marker_genes_chun_list
 ```
+
 ```{r}
 # https://github.com/regan-hamel/h-iPSCs-MNI/blob/master/R%20workflow_iMNs_LThiry_2020.Rmd
 marker_genes_iPSC <- list(MNPCs = c("CHAT", "ISL1", "ISL2", "MNX1", "OLIG2", "NEUROG2"),
@@ -387,16 +400,19 @@ marker_genes_iPSC <- list(MNPCs = c("CHAT", "ISL1", "ISL2", "MNX1", "OLIG2", "NE
                 Oligodendrocytes = c("PDGFRA", "GALC"),
                 iPSCs = c("NANOG", "POU5F1"))
 ```
+
 ```{r}
 marker_genes_endoderm <- c("CXCR4", "KRT12", "SOX17", "KLF8", "MYCT1",
                            "DKK4", "GATA4", "GATA6","SOX7", "EOMES",
                            "KRT19","CLDN6","FOXA1","FOXA2")
 length(marker_genes_endoderm)
 ```
+
 <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4468382/> Cellular identities in
 vertebrate spinal cord are specified during development along the three basic
 spatial axes of the embryonic body plan \* rostral--caudal, dorsal--ventral, and
 medial--lateral.
+
 ```{r}
 rayon_marker_genes <- openxlsx::read.xlsx(xlsxFile = "resources/cell_refs/Rayon_2021/TableS2.xlsx") %>%
   janitor::clean_names() %>%
@@ -419,6 +435,7 @@ rayon_marker_genes <- openxlsx::read.xlsx(xlsxFile = "resources/cell_refs/Rayon_
 # View(rayon_marker_genes)
 head(rayon_marker_genes)
 ```
+
 ```{r}
 rayon_marker_genes_long <- rayon_marker_genes %>%
   separate(genes_map_step1, into = paste0("gene",1:5), sep=", ") %>%
@@ -437,6 +454,7 @@ rayon_marker_gene_list <-  purrr::map(unique(rayon_marker_genes_long$id), functi
 names(rayon_marker_gene_list) <- unique(rayon_marker_genes_long$id)
 # rayon_marker_gene_list
 ```
+
 ```{r}
 rayon_degs <- openxlsx::read.xlsx("resources/cell_refs/Yadav_2023/1-s2.0-S0896627323000314-mmc5.xlsx", sheet = 1, check.names = FALSE, sep.names = " ") %>%
   pivot_longer(cols = everything(),
@@ -454,6 +472,7 @@ rayon_deg_gene_list <-  purrr::map(esc_celltypes, function(x){
 })
 names(rayon_deg_gene_list) <- esc_celltypes
 ```
+
 ```{r}
 allen_ontology <- get_ontology("resources/cell_refs/allen_institute/pcl.obo",
                                extract_tags='everything')
@@ -465,6 +484,7 @@ human_entries <- data.frame(name = allen_ontology$name,
          !grepl("obsolete", name)) %>%
   filter(grepl("PCL", id), grepl("Hsap", name))
 ```
+
 ```{r}
 blum_gamma_mn_degs <- openxlsx::read.xlsx("references/blum_mouse_spinal_cord/41593_2020_795_MOESM3_ESM.xlsx",sheet = "e", startRow = 2) %>%
   arrange(desc(avg_logFC)) %>%
