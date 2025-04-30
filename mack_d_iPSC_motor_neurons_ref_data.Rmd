@@ -15,6 +15,7 @@ options(stringsAsFactors = FALSE, max.print = 100)
 options(Seurat.object.assay.version = "v5")
 table = function (..., useNA = 'ifany') base::table(..., useNA = useNA)
 ```
+
 ```{r message=FALSE,warning=FALSE}
 library(tidyverse)
 library(ggplot2)
@@ -27,6 +28,7 @@ library(ontologyIndex)
 library(reticulate)
 library(anndata)
 ```
+
 ```{r message=FALSE, warning=FALSE}
 # python modules
 reticulate::use_virtualenv(virtualenv = file.path(getwd(),"venv"))
@@ -34,14 +36,17 @@ sc <- import("scanpy", convert = FALSE)
 scvi <- import("scvi", convert = FALSE)
 scib <- import("scib_metrics.benchmark", convert = FALSE)
 ```
+
 ```{r}
 # address common function name conflicts
 conflicted::conflict_prefer("select", "dplyr")
 conflicted::conflict_prefer("filter","dplyr")
 conflicted::conflict_prefer("saveRDS","base")
 ```
+
 <https://github.com/bnprks/BPCells/issues/6>
 remotes::install_github("bnprks/BPCells")
+
 # Background
 https://www.nature.com/articles/s41586-021-03465-8
 https://journals.biologists.com/dev/article/148/15/dev199711/271192/Single-cell-transcriptome-profiling-of-the-human
@@ -52,8 +57,10 @@ momacverse multi-tissue example:
 https://www.sciencedirect.com/science/article/pii/S1074761321002934#sec4
 cellAnn
 https://academic.oup.com/bioinformatics/article/39/9/btad521/7248909#415839609
+
 # Parallelization
-```{r}
+
+```{r eval=FALSE}
 library(future)
 # check the current active plan
 plan()
@@ -61,6 +68,7 @@ plan("multisession", workers = 2)
 plan()
 options(future.globals.maxSize = 10000 * 1024^2)
 ```
+
 # Define Functions
 ```{r}
 colors_vector <- c(RColorBrewer::brewer.pal(12, "Paired"),
@@ -75,6 +83,7 @@ colors_vector <- c(RColorBrewer::brewer.pal(12, "Paired"),
   c(ggsci::pal_igv()(51))
 length(colors_vector)
 ```
+
 ```{r}
 clean_standardize_annots <- function(seurat_obj){
   age_tissue_clean <- seurat_obj@meta.data %>%
@@ -137,6 +146,7 @@ clean_standardize_annots <- function(seurat_obj){
   return(seurat_obj)
 }
 ```
+
 ```{r}
 make_3D_umap <- function(metadata, idents_column, label_cols, selected_colors=NULL){
     "
@@ -167,6 +177,7 @@ make_3D_umap <- function(metadata, idents_column, label_cols, selected_colors=NU
     return(fig)
 }
 ```
+
 ```{r}
 custom_dimplot <- function(metadata, colorby, dimred_colnames, custom_colors,
                            lab_size = 6, ny = 0, custom_lab_fill = NULL,
