@@ -10,8 +10,13 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     build-essential gfortran libglpk40 \
     zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev \
     libssl-dev libreadline-dev libffi-dev \
-    wget xorg openbox rclone git gh
+    curl wget xorg openbox rclone git gh
 
+# install AWS dependencies
+RUN apt-get -y install s3fs
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install
+
+# install python dependencies
 RUN apt-get -y install pkg-config python3-venv python3-dev
 
 # install R package renv
