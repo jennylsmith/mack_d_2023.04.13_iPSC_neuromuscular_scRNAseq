@@ -24,4 +24,3 @@ RUN Rscript -e "install.packages('remotes', repos='https://cloud.r-project.org',
 # create working dir and update rstudio user/group
 WORKDIR /home/rstudio
 RUN bash /rocker_scripts/init_userconf.sh
-RUN env | xargs > /opt/docker_env.txt
